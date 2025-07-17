@@ -278,6 +278,196 @@ export function validateComponentResponse(response: Partial<ComponentResponse>):
 }
 
 /**
+ * Validates accessibility information
+ * @param accessibilityInfo The accessibility info to validate
+ * @returns An object with isValid flag and any validation errors
+ */
+export function validateAccessibilityInfo(accessibilityInfo: Partial<AccessibilityInfo>): {
+	isValid: boolean;
+	errors: string[];
+} {
+	const errors: string[] = [];
+
+	if (!Array.isArray(accessibilityInfo.ariaAttributes)) {
+		errors.push('Accessibility ariaAttributes should be an array');
+	}
+	if (!Array.isArray(accessibilityInfo.keyboardInteractions)) {
+		errors.push('Accessibility keyboardInteractions should be an array');
+	}
+	if (!Array.isArray(accessibilityInfo.bestPractices)) {
+		errors.push('Accessibility bestPractices should be an array');
+	}
+	if (!Array.isArray(accessibilityInfo.wcagCompliance)) {
+		errors.push('Accessibility wcagCompliance should be an array');
+	}
+
+	// Validate nested objects
+	if (Array.isArray(accessibilityInfo.ariaAttributes)) {
+		accessibilityInfo.ariaAttributes.forEach((attr, index) => {
+			const attrValidation = validateAriaAttribute(attr);
+			if (!attrValidation.isValid) {
+				attrValidation.errors.forEach((error) => {
+					errors.push(`ARIA attribute at index ${index}: ${error}`);
+				});
+			}
+		});
+	}
+
+	if (Array.isArray(accessibilityInfo.keyboardInteractions)) {
+		accessibilityInfo.keyboardInteractions.forEach((interaction, index) => {
+			const interactionValidation = validateKeyboardInteraction(interaction);
+			if (!interactionValidation.isValid) {
+				interactionValidation.errors.forEach((error) => {
+					errors.push(`Keyboard interaction at index ${index}: ${error}`);
+				});
+			}
+		});
+	}
+
+	return {
+		isValid: errors.length === 0,
+		errors
+	};
+}
+
+/**
+ * Validates an ARIA attribute
+ * @param ariaAttribute The ARIA attribute to validate
+ * @returns An object with isValid flag and any validation errors
+ */
+export function validateAriaAttribute(ariaAttribute: Partial<AriaAttribute>): {
+	isValid: boolean;
+	errors: string[];
+} {
+	const errors: string[] = [];
+
+	if (!ariaAttribute.name) errors.push('ARIA attribute name is required');
+	if (!ariaAttribute.description) errors.push('ARIA attribute description is required');
+	if (typeof ariaAttribute.required !== 'boolean') {
+		errors.push('ARIA attribute required field should be a boolean');
+	}
+
+	return {
+		isValid: errors.length === 0,
+		errors
+	};
+}
+
+/**
+ * Validates a keyboard interaction
+ * @param keyboardInteraction The keyboard interaction to validate
+ * @returns An object with isValid flag and any validation errors
+ */
+export function validateKeyboardInteraction(keyboardInteraction: Partial<KeyboardInteraction>): {
+	isValid: boolean;
+	errors: string[];
+} {
+	const errors: string[] = [];
+
+	if (!keyboardInteraction.key) errors.push('Keyboard interaction key is required');
+	if (!keyboardInteraction.description) {
+		errors.push('Keyboard interaction description is required');
+	}
+
+	return {
+		isValid: errors.length === 0,
+		errors
+	};
+}
+
+/**
+ * Validates a component category
+ * @param category The component category to validate
+ * @returns An object with isValid flag and any validation errors
+ */
+export function validateComponentCategory(category: Partial<ComponentCategory>): {
+	isValid: boolean;
+	errors: string[];
+} {
+	const errors: string[] = [];
+
+	if (!category.name) errors.push('Component category name is required');
+	if (!category.description) errors.push('Component category description is required');
+	if (!Array.isArray(category.components)) {
+		errors.push('Component category components should be an array');
+	}
+
+	return {
+		isValid: errors.length === 0,
+		errors
+	};
+}
+
+/**
+ * Validates an installation guide
+ * @param guide The installation guide to validate
+ * @returns An object with isValid flag and any validation errors
+ */
+export function validateInstallationGuide(guide: Partial<InstallationGuide>): {
+	isValid: boolean;
+	errors: string[];
+} {
+	const errors: string[] = [];
+
+	if (!guide.framework) errors.push('Installation guide framework is required');
+	if (!Array.isArray(guide.steps)) errors.push('Installation guide steps should be an array');
+	if (!Array.isArray(guide.requirements)) {
+		errors.push('Installation guide requirements should be an array');
+	}
+	if (!Array.isArray(guide.troubleshooting)) {
+		errors.push('Installation guide troubleshooting should be an array');
+	}
+
+	// Validate nested objects
+	if (Array.isArray(guide.steps)) {
+		guide.steps.forEach((step, index) => {
+			const stepValidation = validateInstallationStep(step);
+			if (!stepValidation.isValid) {
+				stepValidation.errors.forEach((error) => {
+					errors.push(`Installation step at index ${index}: ${error}`);
+				});
+			}
+		});
+	}
+
+	if (Array.isArray(guide.troubleshooting)) {
+		guide.troubleshooting.forEach((item, index) => {
+			const itemValidation = validateTroubleshootingItem(item);
+			if (!itemValidation.isValid) {
+				itemValidation.errors.forEach((error) => {
+					errors.push(`Troubleshooting item at index ${index}: ${error}`);
+				});
+			}
+		});
+	}
+
+	return {
+		isValid: errors.length === 0,
+		errors
+	};
+}
+
+/**
+ * Validates an installation step
+ * @param step The installation step to validate
+ * @returns An object with isValid flag and any validation errors
+ */
+export function validateInstallationStep(step: Partial<InstallationStep>): {
+	isValid: boolean;
+	errors: string[];
+} {
+	const errors: string[] = [];
+
+	if (typeof step.order !== 'number') errors.push('Installation step order should be a number');
+	if (!step.description) errors.push('Installation step description is required');
+
+	return {
+		isValid: errors.length === 0,
+		errors
+	};
+}
+
+/**
  * Helper function to ensure a component object has all required fields
  * @param component Partial component object
  * @returns A complete component object with default values for missing fields

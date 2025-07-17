@@ -7,9 +7,27 @@ import {
 	validateTroubleshootingItem,
 	validateComponentQuery,
 	validateComponentResponse,
+	validateAccessibilityInfo,
+	validateAriaAttribute,
+	validateKeyboardInteraction,
+	validateComponentCategory,
+	validateInstallationGuide,
+	validateInstallationStep,
 	ensureCompleteComponent
 } from './validation';
-import type { Component, Prop, Example, CSSVariable, TroubleshootingItem } from './types';
+import type {
+	Component,
+	Prop,
+	Example,
+	CSSVariable,
+	TroubleshootingItem,
+	AccessibilityInfo,
+	AriaAttribute,
+	KeyboardInteraction,
+	ComponentCategory,
+	InstallationGuide,
+	InstallationStep
+} from './types';
 
 describe('Validation Functions', () => {
 	describe('validateComponent', () => {
@@ -280,6 +298,200 @@ describe('Validation Functions', () => {
 			expect(result.errors).toContain('Response topic is required');
 			expect(result.errors).toContain('Response content is required');
 			expect(result.errors).toContain('Response examples should be an array');
+		});
+	});
+
+	describe('validateAccessibilityInfo', () => {
+		it('should validate valid accessibility info', () => {
+			const accessibilityInfo: AccessibilityInfo = {
+				ariaAttributes: [
+					{
+						name: 'aria-label',
+						description: 'Accessible name for the button',
+						required: true
+					}
+				],
+				keyboardInteractions: [
+					{
+						key: 'Enter',
+						description: 'Activates the button'
+					}
+				],
+				bestPractices: ['Use descriptive labels'],
+				wcagCompliance: ['WCAG 2.1 AA']
+			};
+
+			const result = validateAccessibilityInfo(accessibilityInfo);
+			expect(result.isValid).toBe(true);
+			expect(result.errors).toHaveLength(0);
+		});
+
+		it('should return errors for invalid accessibility info', () => {
+			const accessibilityInfo = {
+				ariaAttributes: 'not an array',
+				keyboardInteractions: [],
+				bestPractices: 'not an array',
+				wcagCompliance: []
+			};
+
+			const result = validateAccessibilityInfo(accessibilityInfo as any);
+			expect(result.isValid).toBe(false);
+			expect(result.errors.length).toBeGreaterThan(0);
+			expect(result.errors).toContain('Accessibility ariaAttributes should be an array');
+			expect(result.errors).toContain('Accessibility bestPractices should be an array');
+		});
+	});
+
+	describe('validateAriaAttribute', () => {
+		it('should validate a valid ARIA attribute', () => {
+			const ariaAttribute: AriaAttribute = {
+				name: 'aria-label',
+				description: 'Accessible name for the element',
+				required: true
+			};
+
+			const result = validateAriaAttribute(ariaAttribute);
+			expect(result.isValid).toBe(true);
+			expect(result.errors).toHaveLength(0);
+		});
+
+		it('should return errors for an invalid ARIA attribute', () => {
+			const ariaAttribute = {
+				name: '',
+				// Missing description
+				required: 'not a boolean'
+			};
+
+			const result = validateAriaAttribute(ariaAttribute as any);
+			expect(result.isValid).toBe(false);
+			expect(result.errors.length).toBeGreaterThan(0);
+			expect(result.errors).toContain('ARIA attribute name is required');
+			expect(result.errors).toContain('ARIA attribute description is required');
+			expect(result.errors).toContain('ARIA attribute required field should be a boolean');
+		});
+	});
+
+	describe('validateKeyboardInteraction', () => {
+		it('should validate a valid keyboard interaction', () => {
+			const keyboardInteraction: KeyboardInteraction = {
+				key: 'Enter',
+				description: 'Activates the button'
+			};
+
+			const result = validateKeyboardInteraction(keyboardInteraction);
+			expect(result.isValid).toBe(true);
+			expect(result.errors).toHaveLength(0);
+		});
+
+		it('should return errors for an invalid keyboard interaction', () => {
+			const keyboardInteraction = {
+				key: ''
+				// Missing description
+			};
+
+			const result = validateKeyboardInteraction(keyboardInteraction as any);
+			expect(result.isValid).toBe(false);
+			expect(result.errors.length).toBeGreaterThan(0);
+			expect(result.errors).toContain('Keyboard interaction key is required');
+			expect(result.errors).toContain('Keyboard interaction description is required');
+		});
+	});
+
+	describe('validateComponentCategory', () => {
+		it('should validate a valid component category', () => {
+			const category: ComponentCategory = {
+				name: 'Form',
+				description: 'Form-related components',
+				components: ['Button', 'Input', 'Select']
+			};
+
+			const result = validateComponentCategory(category);
+			expect(result.isValid).toBe(true);
+			expect(result.errors).toHaveLength(0);
+		});
+
+		it('should return errors for an invalid component category', () => {
+			const category = {
+				name: '',
+				// Missing description
+				components: 'not an array'
+			};
+
+			const result = validateComponentCategory(category as any);
+			expect(result.isValid).toBe(false);
+			expect(result.errors.length).toBeGreaterThan(0);
+			expect(result.errors).toContain('Component category name is required');
+			expect(result.errors).toContain('Component category description is required');
+			expect(result.errors).toContain('Component category components should be an array');
+		});
+	});
+
+	describe('validateInstallationGuide', () => {
+		it('should validate a valid installation guide', () => {
+			const guide: InstallationGuide = {
+				framework: 'sveltekit',
+				steps: [
+					{
+						order: 1,
+						description: 'Install dependencies',
+						command: 'npm install'
+					}
+				],
+				requirements: ['Node.js 16+'],
+				troubleshooting: [
+					{
+						issue: 'Installation fails',
+						solution: 'Check Node.js version'
+					}
+				]
+			};
+
+			const result = validateInstallationGuide(guide);
+			expect(result.isValid).toBe(true);
+			expect(result.errors).toHaveLength(0);
+		});
+
+		it('should return errors for an invalid installation guide', () => {
+			const guide = {
+				framework: '',
+				steps: 'not an array',
+				requirements: 'not an array',
+				troubleshooting: []
+			};
+
+			const result = validateInstallationGuide(guide as any);
+			expect(result.isValid).toBe(false);
+			expect(result.errors.length).toBeGreaterThan(0);
+			expect(result.errors).toContain('Installation guide framework is required');
+			expect(result.errors).toContain('Installation guide steps should be an array');
+			expect(result.errors).toContain('Installation guide requirements should be an array');
+		});
+	});
+
+	describe('validateInstallationStep', () => {
+		it('should validate a valid installation step', () => {
+			const step: InstallationStep = {
+				order: 1,
+				description: 'Install dependencies',
+				command: 'npm install'
+			};
+
+			const result = validateInstallationStep(step);
+			expect(result.isValid).toBe(true);
+			expect(result.errors).toHaveLength(0);
+		});
+
+		it('should return errors for an invalid installation step', () => {
+			const step = {
+				order: 'not a number'
+				// Missing description
+			};
+
+			const result = validateInstallationStep(step as any);
+			expect(result.isValid).toBe(false);
+			expect(result.errors.length).toBeGreaterThan(0);
+			expect(result.errors).toContain('Installation step order should be a number');
+			expect(result.errors).toContain('Installation step description is required');
 		});
 	});
 

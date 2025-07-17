@@ -165,6 +165,7 @@ export interface MCPTool {
 	name: string;
 	description: string;
 	parameters: Record<string, unknown>;
+	handler?: (params: Record<string, unknown>) => Promise<any>;
 }
 
 /**
@@ -174,6 +175,7 @@ export interface MCPResource {
 	name: string;
 	description: string;
 	path: string;
+	data?: Record<string, unknown>;
 }
 
 /**

@@ -6,11 +6,14 @@
  */
 
 import type { MCPTool } from '../core/types';
+import {
+	getComponentInfo,
+	getComponentExample,
+	searchComponents,
+	getThemingInfo,
+	getTroubleshooting
+} from './handlers';
 
-/**
- * List of all available MCP tools
- * These will be implemented in future tasks
- */
 export const mcpTools: MCPTool[] = [
 	{
 		name: 'getComponentInfo',
@@ -20,7 +23,8 @@ export const mcpTools: MCPTool[] = [
 				type: 'string',
 				description: 'Name of the component to retrieve information for'
 			}
-		}
+		},
+		handler: getComponentInfo
 	},
 	{
 		name: 'getComponentExample',
@@ -35,7 +39,8 @@ export const mcpTools: MCPTool[] = [
 				description: 'Type of example to retrieve (basic, advanced, theming, etc.)',
 				required: false
 			}
-		}
+		},
+		handler: getComponentExample
 	},
 	{
 		name: 'searchComponents',
@@ -45,7 +50,8 @@ export const mcpTools: MCPTool[] = [
 				type: 'string',
 				description: 'Search query'
 			}
-		}
+		},
+		handler: searchComponents
 	},
 	{
 		name: 'getThemingInfo',
@@ -56,7 +62,8 @@ export const mcpTools: MCPTool[] = [
 				description: 'Name of the component to retrieve theming information for',
 				required: false
 			}
-		}
+		},
+		handler: getThemingInfo
 	},
 	{
 		name: 'getTroubleshooting',
@@ -71,6 +78,7 @@ export const mcpTools: MCPTool[] = [
 				description: 'Specific issue to troubleshoot',
 				required: false
 			}
-		}
+		},
+		handler: getTroubleshooting
 	}
 ];
