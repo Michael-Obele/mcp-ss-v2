@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Svelte Check Runner",
+  "description": "Automatically runs svelte-check when Svelte, SvelteKit, or TypeScript files are modified to catch errors early",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.svelte",
+      "**/*.ts",
+      "src/routes/**/*",
+      "src/lib/**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "I noticed you've made changes to Svelte, SvelteKit, or TypeScript files. I'll run svelte-check to verify there are no errors.\n\nPlease analyze the results of the svelte-check command below. If there are any errors:\n1. Categorize them by severity and type\n2. Explain what each error means in simple terms\n3. Suggest specific fixes for each error\n4. If the errors are extensive, create a prioritized plan to address them\n\nCommand output:\n{output}"
+  }
+}

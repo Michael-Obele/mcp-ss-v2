@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "README Feature Updater",
+  "description": "Automatically updates the README.md when new features are added to the project",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.ts",
+      "src/**/*.js",
+      "src/**/*.svelte",
+      "package.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are a documentation assistant. The project has been updated with potential new features or changes. Please review the changes in the codebase and update the README.md file to reflect any new features, improvements, or significant changes. Make sure to:\n1. Maintain the existing structure of the README\n2. Add new features in the appropriate sections\n3. Update any outdated information\n4. Keep the tone and style consistent with the rest of the document\n5. Only make changes if there are actual new features or significant updates"
+  }
+}
