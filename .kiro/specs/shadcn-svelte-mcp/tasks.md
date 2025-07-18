@@ -71,21 +71,21 @@
     - _Requirements: 3.1, 3.2, 3.3, 3.4_
 
 - [-] 6. Create SvelteKit integration
-  - [-] 6.1 Set up SvelteKit API routes
+  - [x] 6.1 Set up SvelteKit API routes
     - Create API routes for MCP endpoints
     - Implement request handling and response formatting
     - _Requirements: 7.1, 7.2, 7.3_
-  - [ ] 6.2 Create homepage with documentation
+  - [x] 6.2 Create homepage with documentation
     - Implement homepage with project information
     - Add installation instructions and usage examples
     - _Requirements: 5.1, 7.4, 7.5_
-  - [ ] 6.3 Configure SvelteKit environment
+  - [x] 6.3 Configure SvelteKit environment
     - Set up environment variables for configuration
     - Configure build and deployment settings
     - _Requirements: 5.1, 5.3, 7.2, 7.5_
 
 - [ ] 7. Implement testing and validation
-  - [ ] 7.1 Create unit tests for core functionality
+  - [x] 7.1 Create unit tests for core functionality
     - Write tests for documentation storage and access
     - Test MCP tools and resources
     - _Requirements: 5.2, 5.4_

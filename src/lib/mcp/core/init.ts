@@ -16,25 +16,24 @@ import {
 	validateInstallationGuide
 } from './validation.js';
 import { mcpTools } from '../tools/index.js';
-import { dev } from '$app/environment';
 import { documentationResources, loadResource } from '../resources/index.js';
+import { getServerConfig } from './config.js';
+import { PUBLIC_BASE_URL } from '$env/static/public';
 
 /**
  * Initialize the MCP server and documentation store
  */
 export function initMCPServer() {
-	// Initialize the server with custom configuration
-	const server = initServer({
-		logLevel: dev ? LogLevel.DEBUG : LogLevel.INFO,
-		rateLimit: {
-			enabled: !dev,
-			maxRequests: 100,
-			timeWindow: 60 * 1000 // 1 minute
-		}
-	});
+	// Get configuration from centralized config
+	const serverConfig = getServerConfig();
+
+	// Initialize the server with configuration
+	const server = initServer(serverConfig);
 
 	// Log server initialization
 	server.log(LogLevel.INFO, 'Initializing MCP server');
+	server.log(LogLevel.DEBUG, 'Server configuration:', serverConfig);
+	server.log(LogLevel.DEBUG, 'Base URL:', PUBLIC_BASE_URL);
 
 	// Get initial data
 	const initialData = getInitialData();

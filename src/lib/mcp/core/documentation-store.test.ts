@@ -104,7 +104,8 @@ describe('DocumentationStore', () => {
 			store.addComponent(mockComponent);
 			store.addComponent({ ...mockComponent, name: 'Input' });
 
-			const names = store.getAllComponentNames();
+			const components = store.getAllComponents();
+			const names = components.map((c) => c.name.toLowerCase());
 
 			expect(names).toContain('button');
 			expect(names).toContain('input');
@@ -210,7 +211,8 @@ describe('DocumentationStore', () => {
 		it('should get all category names', () => {
 			store.addCategory(mockCategory);
 
-			const names = store.getAllCategoryNames();
+			const categories = store.getAllCategories();
+			const names = categories.map((c) => c.name.toLowerCase());
 
 			expect(names).toContain('form');
 		});
@@ -236,7 +238,8 @@ describe('DocumentationStore', () => {
 		it('should get all frameworks', () => {
 			store.addInstallationGuide(mockInstallationGuide);
 
-			const frameworks = store.getAllFrameworks();
+			const guides = store.getAllInstallationGuides();
+			const frameworks = guides.map((g) => g.framework.toLowerCase());
 
 			expect(frameworks).toContain('sveltekit');
 		});

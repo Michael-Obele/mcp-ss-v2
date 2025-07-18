@@ -1,0 +1,42 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Node.js
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Build outputs
+build
+.svelte-kit
+coverage
+
+# Development files
+.env
+.env.*
+!.env.example
+.vscode
+.idea
+*.log
+*.swp
+*.swo
+
+# Test files
+e2e
+playwright-report
+test-results
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Kiro
+.kiro

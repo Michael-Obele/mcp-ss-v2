@@ -14,9 +14,11 @@
 
 	// Get all categories
 	const categories = documentationStore.getAllCategories();
+	const categoryNames = categories.map((category) => category.name);
 
 	// Get all installation guides
 	const installationGuides = documentationStore.getAllInstallationGuides();
+	const frameworkNames = installationGuides.map((guide) => guide.framework);
 </script>
 
 <svelte:head>
@@ -39,6 +41,129 @@
 				documentation, enabling them to answer questions, provide code examples, and assist
 				developers with implementing shadcn-svelte components in their projects.
 			</p>
+		</section>
+
+		<section class="mb-8">
+			<h2 class="mb-4 text-2xl font-semibold">Installation</h2>
+			<div class="rounded-md bg-gray-100 p-4">
+				<h3 class="mb-2 font-semibold">Prerequisites</h3>
+				<ul class="mb-4 list-disc pl-6">
+					<li>Node.js 18.x or higher</li>
+					<li>npm, pnpm, or bun package manager</li>
+				</ul>
+
+				<h3 class="mb-2 font-semibold">Installation Steps</h3>
+				<div class="mb-4 rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+# Clone the repository
+git clone https://github.com/your-username/shadcn-svelte-mcp.git
+
+# Navigate to the project directory
+cd shadcn-svelte-mcp
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev</pre>
+				</div>
+
+				<h3 class="mb-2 font-semibold">Environment Configuration</h3>
+				<p class="mb-2">
+					Create a <code class="rounded bg-gray-200 px-1">.env</code> file in the project root with the
+					following variables:
+				</p>
+				<div class="rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+# Server configuration
+PORT=3000
+HOST=localhost</pre>
+				</div>
+			</div>
+		</section>
+
+		<section class="mb-8">
+			<h2 class="mb-4 text-2xl font-semibold">Usage Examples</h2>
+			<div class="rounded-md bg-gray-100 p-4">
+				<h3 class="mb-2 font-semibold">Querying Component Information</h3>
+				<p class="mb-2">Example request to get information about the Button component:</p>
+				<div class="mb-4 rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+POST /api/mcp
+Content-Type: application/json
+
+&#123;
+  "tool": "getComponentInfo",
+  "parameters": &#123;
+    "componentName": "Button"
+  &#125;
+&#125;</pre>
+				</div>
+
+				<h3 class="mb-2 font-semibold">Getting Component Examples</h3>
+				<p class="mb-2">Example request to get code examples for the Button component:</p>
+				<div class="mb-4 rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+POST /api/mcp
+Content-Type: application/json
+
+&#123;
+  "tool": "getComponentExample",
+  "parameters": &#123;
+    "componentName": "Button",
+    "exampleType": "basic"
+  &#125;
+&#125;</pre>
+				</div>
+
+				<h3 class="mb-2 font-semibold">Searching Components</h3>
+				<p class="mb-2">Example request to search for components related to "form":</p>
+				<div class="rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+POST /api/mcp
+Content-Type: application/json
+
+&#123;
+  "tool": "searchComponents",
+  "parameters": &#123;
+    "query": "form"
+  &#125;
+&#125;</pre>
+				</div>
+			</div>
+		</section>
+
+		<section class="mb-8">
+			<h2 class="mb-4 text-2xl font-semibold">Integration with AI Assistants</h2>
+			<div class="rounded-md bg-gray-100 p-4">
+				<h3 class="mb-2 font-semibold">Configuration Steps</h3>
+				<ol class="mb-4 list-decimal pl-6">
+					<li class="mb-2">Deploy this MCP server to your preferred hosting environment</li>
+					<li class="mb-2">
+						Configure your AI assistant to connect to the MCP endpoint at <code
+							class="rounded bg-gray-200 px-1">/api/mcp</code
+						>
+					</li>
+					<li class="mb-2">Set up authentication if required (see documentation)</li>
+					<li class="mb-2">Test the connection by requesting server information</li>
+				</ol>
+
+				<h3 class="mb-2 font-semibold">Example Configuration</h3>
+				<div class="rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+&#123;
+  "mcpServers": &#123;
+    "shadcn-svelte": &#123;
+      "url": "https://your-server-url.com/api/mcp",
+      "auth": &#123;
+        "type": "bearer",
+        "token": "your-auth-token"
+      &#125;
+    &#125;
+  &#125;
+&#125;</pre>
+				</div>
+			</div>
 		</section>
 
 		<section class="mb-8">
@@ -162,6 +287,34 @@
 			</ul>
 		</section>
 
+		<section class="mb-8">
+			<h2 class="mb-4 text-2xl font-semibold">Deployment</h2>
+			<div class="rounded-md bg-gray-100 p-4">
+				<h3 class="mb-2 font-semibold">Build for Production</h3>
+				<div class="mb-4 rounded-md bg-gray-800 p-4 text-white">
+					<pre>
+# Build the application
+npm run build
+
+# Preview the production build
+npm run preview</pre>
+				</div>
+
+				<h3 class="mb-2 font-semibold">Deployment Options</h3>
+				<ul class="list-disc pl-6">
+					<li class="mb-2">
+						<strong>Vercel/Netlify:</strong> Connect your repository and deploy with automatic CI/CD
+					</li>
+					<li class="mb-2">
+						<strong>Docker:</strong> Use the provided Dockerfile to build and deploy as a container
+					</li>
+					<li class="mb-2">
+						<strong>Node.js Server:</strong> Deploy as a standard Node.js application
+					</li>
+				</ul>
+			</div>
+		</section>
+
 		<section>
 			<h2 class="mb-4 text-2xl font-semibold">Getting Started</h2>
 			<p class="mb-4">
@@ -171,4 +324,14 @@
 			<p>For more information on the Model Context Protocol, refer to the MCP documentation.</p>
 		</section>
 	</main>
+
+	<footer class="mt-12 border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
+		<p>shadcn-svelte MCP Server &copy; {new Date().getFullYear()}</p>
+		<p class="mt-2">
+			Built with <a href="https://kit.svelte.dev" class="text-blue-600 hover:underline">SvelteKit</a
+			>
+			and
+			<a href="https://shadcn-svelte.com" class="text-blue-600 hover:underline">shadcn-svelte</a>
+		</p>
+	</footer>
 </div>

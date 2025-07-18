@@ -178,13 +178,14 @@ describe('MCPServer', () => {
 		it('should validate valid requests', () => {
 			const validRequest = { tool: 'getComponentInfo', params: { componentName: 'Button' } };
 
-			expect(server.validateRequest(validRequest)).toBe(true);
+			const result = server.validateRequest(validRequest);
+			expect(result.isValid).toBe(true);
 		});
 
 		it('should reject invalid requests', () => {
-			expect(server.validateRequest(null)).toBe(false);
-			expect(server.validateRequest(undefined)).toBe(false);
-			expect(server.validateRequest('not an object')).toBe(false);
+			expect(server.validateRequest(null).isValid).toBe(false);
+			expect(server.validateRequest(undefined).isValid).toBe(false);
+			expect(server.validateRequest('not an object').isValid).toBe(false);
 		});
 	});
 

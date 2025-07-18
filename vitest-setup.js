@@ -1,19 +1,18 @@
-/// <reference types="@vitest/browser/matchers" />
-/// <reference types="@vitest/browser/providers/playwright" />
-import '@testing-library/jest-dom';
-
-// Add any global setup for testing-library/svelte with Svelte 5
-import { configure } from '@testing-library/svelte';
+// Import jest-dom matchers
+import '@testing-library/jest-dom/vitest';
 
 // Configure testing-library/svelte for Svelte 5
+import { configure } from '@testing-library/svelte';
+
 configure({
 	testIdAttribute: 'data-testid'
 	// Add any other configuration options needed for Svelte 5
 });
 
-// Mock console methods to reduce noise in test output
+// Add any global mocks or setup needed for all tests
 import { vi } from 'vitest';
 
+// Mock console methods to reduce noise in test output
 const originalConsoleError = console.error;
 const originalConsoleWarn = console.warn;
 const originalConsoleLog = console.log;

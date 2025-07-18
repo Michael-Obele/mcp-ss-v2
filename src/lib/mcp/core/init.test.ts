@@ -22,13 +22,14 @@ describe('MCP Server Initialization', () => {
 	});
 
 	it('should initialize the server with the correct configuration', () => {
-		const serverConfig = initMCPServer();
+		const server = initMCPServer();
 
-		expect(serverConfig).toBeDefined();
-		expect(serverConfig.name).toBe('shadcn-svelte-mcp');
-		expect(serverConfig.version).toBeDefined();
-		expect(serverConfig.description).toBeDefined();
-		expect(serverConfig.capabilities).toBeInstanceOf(Array);
+		expect(server).toBeDefined();
+		const serverInfo = server.getServerInfo();
+		expect(serverInfo.name).toBe('shadcn-svelte-mcp');
+		expect(serverInfo.version).toBeDefined();
+		expect(serverInfo.description).toBeDefined();
+		expect(serverInfo.capabilities).toBeInstanceOf(Array);
 	});
 
 	it('should populate the documentation store with initial data', () => {

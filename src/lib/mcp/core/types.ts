@@ -156,6 +156,7 @@ export interface ComponentResponse {
 	cssVariables?: CSSVariable[];
 	props?: Prop[];
 	troubleshooting?: TroubleshootingItem[];
+	accessibility?: AccessibilityInfo;
 }
 
 /**
