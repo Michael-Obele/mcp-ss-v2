@@ -89,7 +89,7 @@
     - Write tests for documentation storage and access
     - Test MCP tools and resources
     - _Requirements: 5.2, 5.4_
-  - [ ] 7.2 Create integration tests
+  - [x] 7.2 Create integration tests
     - Test end-to-end MCP request and response flow
     - Validate correct handling of various query types
     - _Requirements: 1.1, 1.2, 1.3, 1.4_
