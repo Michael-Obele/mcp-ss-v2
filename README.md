@@ -18,6 +18,7 @@ This project provides a standardized MCP interface for AI systems to query and r
 - **Search Functionality**: Search for components based on keywords or functionality
 - **Pagination Support**: Navigate through large sets of component data efficiently
 - **Advanced Filtering**: Filter components by category, topic, example type, and framework
+- **Accessibility Information**: Access detailed accessibility guidance including ARIA attributes, keyboard interactions, and WCAG compliance information
 
 ## MCP Tools
 
