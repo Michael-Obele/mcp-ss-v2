@@ -16,7 +16,7 @@
     - Use Card component for the header container
     - Maintain existing content (server name, description, version)
     - _Requirements: 1.1, 1.2, 3.1, 3.2_
-  - [ ] 3.2 Implement responsive header layout
+  - [x] 3.2 Implement responsive header layout
     - Create a flex layout for the header
     - Ensure proper alignment and spacing
     - Make sure it adapts to different screen sizes
@@ -121,17 +121,27 @@
   - Make sure it adapts to different screen sizes
   - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 15. Test and refine
-  - [ ] 15.1 Test in light and dark themes
+- [ ] 15. Implement Copy-to-Clipboard functionality for code blocks
+  - Create a reusable component for code blocks with copy functionality
+  - Add visual feedback when code is copied
+  - Ensure functionality works across all code blocks
+  - _Requirements: 4.3_
+
+- [ ] 16. Test and refine
+  - [ ] 16.1 Test in light and dark themes
     - Verify all components render correctly in both themes
     - Check for any styling issues or inconsistencies
     - _Requirements: 2.4, 4.2_
-  - [ ] 15.2 Test responsiveness
+  - [ ] 16.2 Test responsiveness
     - Verify layout adapts properly to different screen sizes
     - Check for any layout issues on mobile devices
     - _Requirements: 3.3_
-  - [ ] 15.3 Verify accessibility
+  - [ ] 16.3 Verify accessibility
     - Check that all components meet accessibility standards
     - Ensure proper keyboard navigation
     - Verify screen reader compatibility
     - _Requirements: 3.5_
+  - [ ] 16.4 Verify theme persistence
+    - Check that theme preference is saved and restored on page reload
+    - Test theme persistence across browser sessions
+    - _Requirements: 2.5_
