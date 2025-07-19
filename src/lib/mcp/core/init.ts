@@ -18,7 +18,8 @@ import {
 import { mcpTools } from '../tools/index.js';
 import { documentationResources, loadResource } from '../resources/index.js';
 import { getServerConfig } from './config.js';
-import { PUBLIC_BASE_URL } from '$env/static/public';
+import { getMetricsService } from './metrics.js';
+// import { PUBLIC_BASE_URL } from '$env/static/public';
 
 /**
  * Initialize the MCP server and documentation store
@@ -33,7 +34,7 @@ export function initMCPServer() {
 	// Log server initialization
 	server.log(LogLevel.INFO, 'Initializing MCP server');
 	server.log(LogLevel.DEBUG, 'Server configuration:', serverConfig);
-	server.log(LogLevel.DEBUG, 'Base URL:', PUBLIC_BASE_URL);
+	server.log(LogLevel.DEBUG, 'Base URL:', process.env.PUBLIC_BASE_URL);
 
 	// Get initial data
 	const initialData = getInitialData();
@@ -109,6 +110,9 @@ export function initMCPServer() {
 
 	return server;
 }
+
+// Initialize metrics service
+export const metricsService = getMetricsService();
 
 // Export a singleton instance that can be imported and used
 export const mcpServer = initMCPServer();

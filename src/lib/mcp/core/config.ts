@@ -6,8 +6,8 @@
  */
 
 import { dev } from '$app/environment';
-import { env } from '$env/dynamic/private';
-import { PUBLIC_BASE_URL } from '$env/static/public';
+// import { env } from '$env/dynamic/private';
+// import { PUBLIC_BASE_URL } from '$env/static/public';
 import { LogLevel } from './server';
 
 /**
@@ -71,47 +71,47 @@ function parseLogLevel(value: string | undefined, defaultValue: LogLevel): LogLe
  */
 export const config = {
 	server: {
-		name: env.MCP_SERVER_NAME || 'shadcn-svelte-mcp',
-		version: env.MCP_SERVER_VERSION || '0.1.0',
+		name: process.env.MCP_SERVER_NAME || 'shadcn-svelte-mcp',
+		version: process.env.MCP_SERVER_VERSION || '0.1.0',
 		description:
-			env.MCP_SERVER_DESCRIPTION || 'MCP server for shadcn-svelte component documentation',
-		baseUrl: PUBLIC_BASE_URL || '/api/mcp'
+			process.env.MCP_SERVER_DESCRIPTION || 'MCP server for shadcn-svelte component documentation',
+		baseUrl: process.env.PUBLIC_BASE_URL || '/api/mcp'
 	},
 	logging: {
-		level: parseLogLevel(env.MCP_LOG_LEVEL, dev ? LogLevel.DEBUG : LogLevel.INFO)
+		level: parseLogLevel(process.env.MCP_LOG_LEVEL, dev ? LogLevel.DEBUG : LogLevel.INFO)
 	},
 	rateLimit: {
-		enabled: parseBoolean(env.MCP_RATE_LIMIT_ENABLED, !dev),
-		maxRequests: parseNumber(env.MCP_RATE_LIMIT_MAX_REQUESTS, 100),
-		timeWindow: parseNumber(env.MCP_RATE_LIMIT_TIME_WINDOW, 60 * 1000) // 1 minute default
+		enabled: parseBoolean(process.env.MCP_RATE_LIMIT_ENABLED, !dev),
+		maxRequests: parseNumber(process.env.MCP_RATE_LIMIT_MAX_REQUESTS, 100),
+		timeWindow: parseNumber(process.env.MCP_RATE_LIMIT_TIME_WINDOW, 60 * 1000) // 1 minute default
 	},
 	cors: {
-		enabled: parseBoolean(env.MCP_CORS_ENABLED, true),
-		allowedOrigins: env.MCP_CORS_ALLOWED_ORIGINS
-			? parseStringArray(env.MCP_CORS_ALLOWED_ORIGINS)
+		enabled: parseBoolean(process.env.MCP_CORS_ENABLED, true),
+		allowedOrigins: process.env.MCP_CORS_ALLOWED_ORIGINS
+			? parseStringArray(process.env.MCP_CORS_ALLOWED_ORIGINS)
 			: ['*'],
-		allowedMethods: env.MCP_CORS_ALLOWED_METHODS
-			? parseStringArray(env.MCP_CORS_ALLOWED_METHODS)
+		allowedMethods: process.env.MCP_CORS_ALLOWED_METHODS
+			? parseStringArray(process.env.MCP_CORS_ALLOWED_METHODS)
 			: ['GET', 'POST', 'OPTIONS'],
-		allowedHeaders: env.MCP_CORS_ALLOWED_HEADERS
-			? parseStringArray(env.MCP_CORS_ALLOWED_HEADERS)
+		allowedHeaders: process.env.MCP_CORS_ALLOWED_HEADERS
+			? parseStringArray(process.env.MCP_CORS_ALLOWED_HEADERS)
 			: ['Content-Type', 'Authorization', 'X-Requested-With'],
-		allowCredentials: parseBoolean(env.MCP_CORS_ALLOW_CREDENTIALS, true),
-		maxAge: parseNumber(env.MCP_CORS_MAX_AGE, 86400) // 24 hours default
+		allowCredentials: parseBoolean(process.env.MCP_CORS_ALLOW_CREDENTIALS, true),
+		maxAge: parseNumber(process.env.MCP_CORS_MAX_AGE, 86400) // 24 hours default
 	},
 	security: {
-		contentSecurityPolicy: parseBoolean(env.MCP_SECURITY_CSP_ENABLED, true),
-		strictTransportSecurity: parseBoolean(env.MCP_SECURITY_HSTS_ENABLED, true),
-		xFrameOptions: parseBoolean(env.MCP_SECURITY_XFRAME_ENABLED, true),
-		xContentTypeOptions: parseBoolean(env.MCP_SECURITY_XCONTENT_ENABLED, true)
+		contentSecurityPolicy: parseBoolean(process.env.MCP_SECURITY_CSP_ENABLED, true),
+		strictTransportSecurity: parseBoolean(process.env.MCP_SECURITY_HSTS_ENABLED, true),
+		xFrameOptions: parseBoolean(process.env.MCP_SECURITY_XFRAME_ENABLED, true),
+		xContentTypeOptions: parseBoolean(process.env.MCP_SECURITY_XCONTENT_ENABLED, true)
 	},
 	request: {
-		maxSize: parseNumber(env.MCP_MAX_REQUEST_SIZE, 1024 * 1024) // 1MB default
+		maxSize: parseNumber(process.env.MCP_MAX_REQUEST_SIZE, 1024 * 1024) // 1MB default
 	},
 	deployment: {
-		environment: env.NODE_ENV || (dev ? 'development' : 'production'),
-		port: parseNumber(env.PORT, 3000),
-		host: env.HOST || 'localhost'
+		environment: process.env.NODE_ENV || (dev ? 'development' : 'production'),
+		port: parseNumber(process.env.PORT, 3000),
+		host: process.env.HOST || 'localhost'
 	}
 };
 

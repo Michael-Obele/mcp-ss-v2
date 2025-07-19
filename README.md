@@ -14,6 +14,10 @@ This project provides a standardized MCP interface for AI systems to query and r
   - Advanced CSS variable filtering and discovery
   - Component-specific theming documentation
   - Cross-component variable relationships
+- **Dark Theme Support**: Toggle between light and dark themes
+  - Automatic detection of user's preferred color scheme
+  - Persistent theme preference
+  - Accessible in both light and dark modes
 - **Troubleshooting Help**: Find solutions for common issues with components
 - **Search Functionality**: Search for components based on keywords or functionality
 - **Pagination Support**: Navigate through large sets of component data efficiently

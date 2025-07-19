@@ -6,9 +6,10 @@
  */
 
 import { json } from '@sveltejs/kit';
-import { mcpServer } from '$lib/mcp/core/init';
+import { mcpServer, metricsService } from '$lib/mcp/core/init';
 import { LogLevel, MCPErrorCode, processMCPRequest } from '$lib/mcp/core/server';
 import type { RequestHandler } from './$types';
+import { randomUUID } from 'crypto';
 
 /**
  * Apply CORS and security headers to a response
@@ -40,12 +41,18 @@ export const OPTIONS: RequestHandler = async ({ request }) => {
  * GET handler for MCP server discovery
  */
 export const GET: RequestHandler = async ({ request }) => {
+	// Generate a unique request ID for tracking
+	const requestId = randomUUID();
+
 	try {
 		// Get client IP for rate limiting
 		const clientIp = request.headers.get('x-forwarded-for') || 'unknown';
 
 		// Check rate limit
 		if (mcpServer.checkRateLimit(clientIp)) {
+			// Record rate limit exceeded in metrics
+			metricsService.recordRateLimitExceeded();
+
 			const errorResponse = json(
 				mcpServer.createError(
 					MCPErrorCode.RATE_LIMIT_EXCEEDED,
@@ -55,6 +62,9 @@ export const GET: RequestHandler = async ({ request }) => {
 			);
 			return applyResponseHeaders(request, errorResponse);
 		}
+
+		// Record request start in metrics
+		metricsService.recordRequestStart(requestId, 'discovery');
 
 		// Log the request
 		mcpServer.log(LogLevel.INFO, `GET request from ${clientIp}`);
@@ -92,10 +102,17 @@ export const GET: RequestHandler = async ({ request }) => {
 		}
 
 		const jsonResponse = json(response, { status: statusCode });
+
+		// Record successful request completion in metrics
+		metricsService.recordRequestEnd(requestId, statusCode >= 400);
+
 		return applyResponseHeaders(request, jsonResponse);
 	} catch (error) {
 		// Log the error
 		mcpServer.log(LogLevel.ERROR, 'Error processing GET request', error);
+
+		// Record error in metrics
+		metricsService.recordRequestEnd(requestId, true, MCPErrorCode.INTERNAL_ERROR);
 
 		const errorResponse = json(
 			mcpServer.createError(

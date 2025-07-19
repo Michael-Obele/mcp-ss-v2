@@ -2,6 +2,7 @@
 	import { mcpServer } from '$lib/mcp/core/init';
 	import { documentationStore } from '$lib/mcp/core/documentation-store';
 	import { mcpTools } from '$lib/mcp/tools';
+	import ThemeToggle from '$lib/components/blocks/ThemeToggle.svelte';
 
 	// Get server info
 	const serverInfo = mcpServer.getServerInfo();
@@ -26,10 +27,15 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-	<header class="mb-8">
-		<h1 class="mb-2 text-4xl font-bold">{serverInfo.name}</h1>
-		<p class="text-xl text-gray-600">{serverInfo.description}</p>
-		<p class="text-sm text-gray-500">Version: {serverInfo.version}</p>
+	<header class="mb-8 flex flex-col md:flex-row md:items-start md:justify-between">
+		<div>
+			<h1 class="mb-2 text-4xl font-bold">{serverInfo.name}</h1>
+			<p class="text-xl text-gray-600 dark:text-gray-300">{serverInfo.description}</p>
+			<p class="text-sm text-gray-500 dark:text-gray-400">Version: {serverInfo.version}</p>
+		</div>
+		<div class="mt-4 md:mt-0">
+			<ThemeToggle />
+		</div>
 	</header>
 
 	<main>
